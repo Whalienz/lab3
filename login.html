@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <div class="background-image"></div>
+
+    <form id="loginForm">
+        <h2>Log In</h2>
+    
+        <div id="errorMessage" style="display: none; color: red;"></div>
+    
+        <p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Email address *">
+        </p>
+
+        <p>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Password *">
+        </p>
+    
+        <div>
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+            <a href="/forgot-password">Forgot Password?</a>
+        </div>
+    
+        <div>
+            <button type="button" onclick="location.href='/signuppage'">Create New Account</button>
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+
+    <!-- <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('errorMessage');
+
+            try {
+                const response = await fetch('http://localhost:9333/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value
+                    })
+                });
+
+                if (response.ok) {
+                    const userProfile = await response.json();
+                    const token = userProfile.token;
+
+                    // Store token based on remember me checkbox
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('token', token);
+                    } else {
+                        sessionStorage.setItem('token', token);
+                    }
+
+                    // Redirect based on user role (you'll need to decode the token)
+                    window.location.href = '/roleZeroUser';  // Update this based on role
+                } else {
+                    errorDiv.textContent = 'Invalid email or password';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'An unexpected error occurred. Please try again.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script> -->
+</body>
+
+</html>
