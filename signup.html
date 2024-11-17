@@ -141,6 +141,35 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        .checkbox-group {
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkbox-input {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.375rem;
+            accent-color: white;
+        }
+
+        .checkbox-text {
+            font-size: 0.875rem;
+        }
+
+        .checkbox-error {
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 
@@ -171,6 +200,26 @@
                 <input type="password" name="password" id="password" required placeholder="Password *">
             </div>
 
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="privacyPolicy" id="privacyPolicy" class="checkbox-input" required>
+                    <span class="checkbox-text">I have read and agree to the privacy policy *</span>
+                </label>
+                <p class="checkbox-error" id="privacyPolicyError" style="display: none;">
+                    This field is required
+                </p>
+            </div>
+
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="newsletter" id="newsletter" class="checkbox-input" required>
+                    <span class="checkbox-text">I want to receive news and updates email *</span>
+                </label>
+                <p class="checkbox-error" id="newsletterError" style="display: none;">
+                    This field is required
+                </p>
+            </div>
+
             <div class="button-group">
                 <button type="button" class="back-btn" id="backBtn">Back</button>
                 <button type="submit" class="submit-btn" id="submitBtn">Sign Up</button>
@@ -184,11 +233,24 @@
             const submitBtn = document.getElementById('submitBtn');
             const backBtn = document.getElementById('backBtn');
             const errorDiv = document.getElementById('error');
+            const privacyPolicyError = document.getElementById('privacyPolicyError');
+            const newsletterError = document.getElementById('newsletterError');
 
             let isSubmitting = false;
 
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
+
+                // Check checkboxes
+                const privacyPolicy = document.getElementById('privacyPolicy').checked;
+                const newsletter = document.getElementById('newsletter').checked;
+
+                privacyPolicyError.style.display = privacyPolicy ? 'none' : 'block';
+                newsletterError.style.display = newsletter ? 'none' : 'block';
+
+                if (!privacyPolicy || !newsletter) {
+                    return;
+                }
 
                 if (isSubmitting) return;
 
@@ -201,7 +263,9 @@
                     name: document.getElementById('name').value,
                     employee: document.getElementById('employee').value,
                     email: document.getElementById('email').value,
-                    password: document.getElementById('password').value
+                    password: document.getElementById('password').value,
+                    privacyPolicy: privacyPolicy,
+                    newsletter: newsletter
                 };
 
                 try {
@@ -224,7 +288,6 @@
             });
 
             backBtn.addEventListener('click', function () {
-                // Add your back navigation logic here
                 window.history.back();
             });
         });
